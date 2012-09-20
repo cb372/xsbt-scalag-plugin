@@ -16,7 +16,8 @@ object builtin {
     classCommand,
     objectCommand,
     specs2Command,
-    ScalaTestCommand
+    ScalaTestCommand,
+    htmlCommand
   )
 
   // -----------------
@@ -130,6 +131,23 @@ object builtin {
     operation = {
       case ScalagInput(fqcn :: style :: _, settings) => writeScalaTestIfNotExists(settings, FQCN(fqcn), style)
       case ScalagInput(fqcn :: _, settings) => writeScalaTestIfNotExists(settings, FQCN(fqcn), "FlatSpec")
+    }
+  )
+
+  // -----------------
+  // html
+  // -----------------
+
+  val htmlCommand: ScalagCommand = ScalagCommand(
+    namespace = "html",
+    args = Seq("outputFile", "username"),
+    description = "Generates a new HTML file from a Scalate template",
+    operation = {
+      case ScalagInput(outputFile :: username :: _, settings) =>
+        FilePath(settings.resourceDir + "/" + outputFile).writeIfNotExists(
+          scalate(path = "templates/builtin/greeting.scaml",
+            values = Map("name" -> username))
+        )
     }
   )
 

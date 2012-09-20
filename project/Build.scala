@@ -19,6 +19,7 @@ object AppBuild extends Build {
         "commons-io"        %  "commons-io"        % "2.4",
         "commons-beanutils" %  "commons-beanutils" % "1.8.0",
         "org.freemarker"    %  "freemarker"        % "2.3.19",
+        "org.fusesource.scalate"  % "scalate-core" % "1.5.3",
         "org.scalatest"     %% "scalatest"         % "1.7.2"   % "test"
       )},
       publishTo <<= version { _publishTo },

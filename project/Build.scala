@@ -20,6 +20,7 @@ object AppBuild extends Build {
         "commons-beanutils" %  "commons-beanutils" % "1.8.0",
         "org.freemarker"    %  "freemarker"        % "2.3.19",
         "org.fusesource.scalate"  % "scalate-core" % "1.5.3",
+        "ch.qos.logback"    %  "logback-classic"   % "1.0.7", // need an slf4j impl for Scalate
         "org.scalatest"     %% "scalatest"         % "1.7.2"   % "test"
       )},
       publishTo <<= version { _publishTo },

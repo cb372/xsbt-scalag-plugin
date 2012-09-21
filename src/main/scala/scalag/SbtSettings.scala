@@ -9,5 +9,6 @@ import java.io.File
  * @param testDir usually "src/test/scala"
  * @param resourceDir usually "src/main/resources"
  * @param testResourceDir usually "src/test/resources"
+ * @param managedCp SBT's managed classpath
  */
-case class SbtSettings(srcDir: File, testDir: File, resourceDir: File, testResourceDir: File)
+case class SbtSettings(srcDir: File, testDir: File, resourceDir: File, testResourceDir: File, managedCp: Seq[File])

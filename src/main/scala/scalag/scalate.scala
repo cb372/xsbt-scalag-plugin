@@ -2,18 +2,29 @@ package scalag
 
 import org.fusesource.scalate._
 import util.FileResourceLoader
+import java.io.File
 
 object Scalate {
-  val engine = new TemplateEngine
 
-  // Weird Scalate classpath bug. Amazingly this fixes it!
-  // see https://groups.google.com/d/topic/scalate/sXrLmjRbrbw/discussion
-  engine.classpath = "/Users/chris/.ivy2/cache/org.scala-lang/scala-library/jars/scala-library-2.9.2.jar"
-  engine.combinedClassPath = true
+  private def makeEngine(classpath: Seq[File]): TemplateEngine = {
+    val engine = new TemplateEngine
 
-  def scalate(path: String, values: Map[String, Any]): String = {
-    // load template from classpath
-    val source = TemplateSource.fromUri(path, engine.resourceLoader)
+    // Weird Scalate classpath bug. Amazingly this fixes it!
+    // see https://groups.google.com/d/topic/scalate/sXrLmjRbrbw/discussion
+    val scalaLibraryJar = classpath.find(_.getName == "scala-library.jar")
+    scalaLibraryJar.foreach { jar =>
+      engine.classpath = jar.getAbsolutePath
+      engine.combinedClassPath = true
+    }
+
+    engine
+  }
+
+  def scalate(templatePath: String, values: Map[String, Any], classpath: Seq[File]): String = {
+    val engine = makeEngine(classpath)
+
+    // load template from file or classpath
+    val source = TemplateSource.fromUri(templatePath, engine.resourceLoader)
 
     // run Scalate with the given template and values
     engine.layout(source, values)

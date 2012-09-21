@@ -146,7 +146,8 @@ object builtin {
       case ScalagInput(outputFile :: username :: _, settings) =>
         FilePath(settings.resourceDir + "/" + outputFile).writeIfNotExists(
           scalate(path = "templates/builtin/greeting.scaml",
-            values = Map("name" -> username))
+            values = Map("name" -> username),
+            settings = settings)
         )
     }
   )

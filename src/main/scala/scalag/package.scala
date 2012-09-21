@@ -54,8 +54,8 @@ package object scalag {
     freeMarker.ftl(path, values)
   }
 
-  def scalate(path: String, values: Map[String, String]): String = {
-    Scalate.scalate(path, values)
+  def scalate(path: String, values: Map[String, String], settings: SbtSettings): String = {
+    Scalate.scalate(path, values, settings.managedCp)
   }
 
 }

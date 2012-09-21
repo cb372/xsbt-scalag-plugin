@@ -34,13 +34,15 @@ object ScalagPlugin extends Plugin {
   val scalagTask = InputTask(_ => scalagParser) {
     (task: TaskKey[(Option[String], Seq[Char])]) =>
       (task, scalaSource in Compile, scalaSource in Test,
-        resourceDirectory in Compile, resourceDirectory in Test) map {
-          case ((namespace, chars), srcDir, testDir, resourceDir, testResourceDir) =>
+        resourceDirectory in Compile, resourceDirectory in Test, managedClasspath) map {
+          case ((namespace, chars), srcDir, testDir, resourceDir, testResourceDir, mCp) =>
+            val managedCp = mCp.map(_.data)
             val settings = SbtSettings(
               srcDir = srcDir,
               testDir = testDir,
               resourceDir = resourceDir,
-              testResourceDir = testResourceDir
+              testResourceDir = testResourceDir,
+              managedCp = managedCp
             )
             namespace.map {
               case ns =>

@@ -20,6 +20,13 @@ object Scalate {
     engine
   }
 
+  /**
+   * Use the given Scalate template and values map to generate a string.
+   * @param templatePath can be either a file path or a classpath resource path
+   * @param values key-value map used to subsitute values in the template
+   * @param classpath SBT's managed classpath
+   * @return
+   */
   def scalate(templatePath: String, values: Map[String, Any], classpath: Seq[File]): String = {
     val engine = makeEngine(classpath)
 
